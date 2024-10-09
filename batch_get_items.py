@@ -20,19 +20,13 @@ dynamodb = boto3.client("dynamodb",
                              aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
                              region_name= REGION)
 
-
-
-# Put item in table
-user = dynamodb.put_item(
-     TableName = TABLE_NAME,
-     Item={
-        'Roll No.': {'S': 'F20BB116'}, 
-        'Batch': {'N': '2020'},         
-        'Name': {'S': 'Junaid Farooq'},
-        'Section': {'S': 'Afternoon B'},
-        'Specialization': {'S': 'IT'},
-        'Subjects': {'L': [            
-            {'S': 'DCCN'}, {'S': 'IP'}, {'S': 'DSA'}, {'S': 'OOAD'}
-        ]}
+respone = dynamodb.batch_get_item(
+    RequestItems = {
+        TABLE_NAME : {
+            'Keys': [
+                {"Roll No.": {"S": 'F20BB125'}, "Batch": {"N": '2020'}},
+                {"Roll No.": {"S": 'F20BB106'}, "Batch": {"N": '2020'}}
+            ]
     }
+}
 )
